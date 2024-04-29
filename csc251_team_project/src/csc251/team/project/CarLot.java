@@ -68,6 +68,17 @@ public class CarLot {
 	
 	public ArrayList<Car> getCarsInOrderOfEntry() { return inventory; }
 	
+	
+	// The biggest change for the functions below was swapping any instance refering to numberOfCars, as its not needed when using a dynamic arraylist
+	// for example:  for (int i = 0; i < this.numberOfCars; i++) became for (int i = 0; i < inventory.size(); i++) {
+	// any reference or comparison to numberOfCars was swapped to inventory.size
+	
+	//Another change is instead of accessing the index like an array would: ArrayName[index], ArrayList has the get() method, which returns item at passed index. 
+	//For exmaple: Car aCar = inventory[i], becomes Car aCar = inventory.get(i);
+	// Any reference or usage of inventory[i] swapped to inventory.get(i);
+	
+	
+	
 	public ArrayList<Car> getCarsSortedByMPG() {
 		ArrayList<Car> allCars = new ArrayList<>();
 		for (int i = 0; i < inventory.size(); i++) {
