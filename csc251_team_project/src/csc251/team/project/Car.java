@@ -32,6 +32,19 @@ public class Car {
 		this.setSalesPrice(salesPrice);
 	}
 	
+	//constructor for database read in
+	public Car(String id, int mileage, int mpg, double cost, double salesPrice, boolean sold, double priceSold, double profit) {
+		this();
+		this.setId(id);
+		this.setMileage(mileage);
+		this.setMpg(mpg);
+		this.setCost(cost);
+		this.setSalesPrice(salesPrice);
+		this.setSold(sold);
+		this.setPriceSold(priceSold);
+		this.setProfit(profit);
+	}
+	
 	public Car(String aCSVString) {
 		this();
 		Scanner s = new Scanner(aCSVString);

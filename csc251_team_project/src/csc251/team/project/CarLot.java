@@ -1,5 +1,6 @@
 package csc251.team.project;
 
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -7,6 +8,9 @@ public class CarLot {
 	private ArrayList<Car> inventory;
 //	private int numberOfCars = 0;
 //	private int capacity = 0;
+	
+	String SELECT_ALL = "SELECT * from inventory";
+	
 //	
 	public CarLot() { 
 		// this(100); This is no longer needed as ArrayLists grow dynamically 
@@ -17,6 +21,40 @@ public class CarLot {
 //		this.capacity = capacity;
 //		this.inventory = new ArrayList<Car>(100);
 //	} // Here, since the arraylist grows, do we need to set a capacity? not changing but feel like this could be removed. 
+	
+	
+	//Implementation of Database:
+	// We decided to mimic how we use the .csv loading in CSC-151 and just convert that to using a database.
+	// The idea here is to use the same database we have used all semester, just make a differnt table.
+	// When starting the test, it will load contents from the database into the arraylist implmentation
+	// all actions will be done using arraylist implementation, and then when "Saving"
+	// we will drop the current table in the database, and replace it with the udpated table!
+	
+	
+	public void loadInventory() throws SQLException {
+	    // Connect to database from previous lessons
+	    Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/javabook", "scott", "tiger");
+
+	    try (PreparedStatement query = connection.prepareStatement(SELECT_ALL); //create a query using SELECT_ALL constant
+	         ResultSet response = query.executeQuery()) { 
+	        while (response.next()) {
+	            String id = response.getString("id");
+	            int mileage = response.getInt("mileage");
+	            int mpg = response.getInt("mpg");
+	            double cost = response.getDouble("cost");
+	            double salesPrice = response.getDouble("salesPrice");
+	            boolean sold = response.getBoolean("sold");
+	            double priceSold = response.getDouble("priceSold");
+	            double profit = response.getDouble("profit");
+
+	            Car loadedcar = new Car(id, mileage, mpg, cost, salesPrice, sold, priceSold, profit);
+	            inventory.add(loadedcar);
+	        }
+	    } 
+	}
+
+
+	
 	
 	public void addCar(String id, int mileage, int mpg, double cost, double salesPrice) {
 //		if (numberOfCars < capacity) {
